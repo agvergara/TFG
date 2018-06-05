@@ -1,3 +1,6 @@
+# This script checks the main link between the main nodes and switches
+# on and off the backup link
+
 import subprocess
 import os
 import time
@@ -18,9 +21,10 @@ def send_command ( command ):
     s.close()
     print "Command sent to Waspmote! -> " + command
 
-host_main_a = "193.147.53.176" 
-host_main_b = "10.107.46.86" 
-host_back = "10.107.46.44" 
+host_main_a = "X.X.X.X" #IP of main node A (connected to TF via eth)
+host_main_b = "Y.Y.Y.Y" #IP of main node B (connected to main node A
+# via wireless)
+host_back = "Z.Z.Z.Z" # IP of backup node (connected to TF via wireless) 
 
 ping_packs = 1 
 flag = False # To check if the backup node is on
@@ -35,6 +39,7 @@ nodes_id = "|1:4#|1:8#*"
 check_main_link = 0
 
 sleep_time = 10 # In seconds
+max_checks = 3 # Maximum ICMP checks
 
 while(True):
 	host_down_a = check_node(host_main_a, ping_packs)
@@ -63,7 +68,7 @@ while(True):
 		print "Main link is up"
 
 	if flag and not host_down_a or flag and not host_down_b:
-		if check_main_link >= 3:
+		if check_main_link >= max_checks:
 			flag = False
 			command = alix_off + nodes_id
 			time.sleep(1)

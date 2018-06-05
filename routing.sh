@@ -1,12 +1,12 @@
 #!/bin/sh
-
+#This script creates routes at the start of the nodes
 
 start(){
-        ip route replace 193.147.54.0/24 via 193.147.53.176
+        ip route replace X.X.X.X/24 via Y.Y.Y.Y
 }
 
 stop(){
-        ip route del 193.147.54.0/24
+        ip route del X.X.X.X/24
 }
 
 case "$1" in
